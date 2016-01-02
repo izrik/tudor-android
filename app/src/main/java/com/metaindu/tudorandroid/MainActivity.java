@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                try {
                 URL url;
                 try {
                     url = new URL(Settings.getUrl() + "/task/" + currentTask);
@@ -42,35 +41,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                HttpsURLConnection urlConnection;
-                try {
-                    urlConnection = (HttpsURLConnection) url.openConnection();
-                } catch (IOException e) {
-                    Snackbar.make(view, "Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    return;
-                }
-
-                InputStream in;
-                try {
-                    try {
-                        in = urlConnection.getInputStream();
-                    } catch (IOException e) {
-                        // e.printStackTrace();
-                        Snackbar.make(view, "Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        return;
-                    }
-
-                } finally {
-                    urlConnection.disconnect();
-                }
-            } catch (Exception e) {
-                // e.printStackTrace();
-                Snackbar.make(view, "Last chance, caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            }
+                RequestTask req = new RequestTask(view);
+                req.execute(url);
             }
         });
     }
