@@ -1,7 +1,9 @@
 package com.metaindu.tudorandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,14 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
                 URL url;
                 try {
-                    url = new URL(Settings.getUrl() + "/task/" + currentTask);
+                    url = new URL(Settings.getUrl(MainActivity.this) + "/task/" + currentTask);
                 } catch (MalformedURLException e) {
-                    Snackbar.make(view, "Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "1 Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     return;
                 }
 
-                RequestTask req = new RequestTask(view);
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                boolean verifyCerts = sp.getBoolean("verify_tls_certs", true);
+
+                RequestTask req = new RequestTask(view, verifyCerts);
                 req.execute(url);
             }
         });

@@ -62,4 +62,20 @@
         android:title="Password"
         android:password="true"/>
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="verify_tls_certs"
+        android:title="Verify TLS Certs"/>
+
+    <!--<Preference android:title="Certificate" >-->
+        <!--<intent android:action="android.intent.action.VIEW"-->
+            <!--android:data="http://www.example.com" />-->
+    <!--</Preference>-->
+
+
+    <!--<Preference-->
+        <!--android:title="TLS Certificate"-->
+        <!--android:key="tls_cert"-->
+        <!--/>-->
+
 </PreferenceScreen>

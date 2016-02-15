@@ -4,6 +4,7 @@ package com.metaindu.tudorandroid;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -89,6 +90,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
+
+
             return true;
         }
     };
@@ -130,6 +133,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new GeneralPreferenceFragment()).commit();
+
+
     }
 
     /**
@@ -162,6 +167,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
+
+
+//            Preference filePicker = (Preference) findPreference("tls_cert");
+//            filePicker.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//                @Override
+//                public boolean onPreferenceClick(Preference preference) {
+//                    Intent intent = new Intent(......); //Intent to start openIntents File Manager
+//                    startActivityForResult(intent, requestMode);
+//                    return true;
+//                }
+//            });
+
             setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -182,6 +199,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+
+//        @Override
+//        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//            //get the new value from Intent data
+//            String newValue = ....;
+//            SharedPreferences preferences = ......;
+//            SharedPreferences.Editor editor = preferences.edit();
+//            editor.putString("tls_cert", newValue);
+//            editor.commit();
+//        }
     }
 
     /**
