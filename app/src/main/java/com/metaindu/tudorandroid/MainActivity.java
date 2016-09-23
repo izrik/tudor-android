@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final TextView text_output = (TextView)findViewById(R.id.content_main).findViewById(R.id.text_output);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 boolean verifyCerts = sp.getBoolean("verify_tls_certs", true);
 
-                RequestTask req = new RequestTask(view, verifyCerts);
+                RequestTask req = new RequestTask(view, verifyCerts, text_output);
                 req.execute(url);
             }
         });

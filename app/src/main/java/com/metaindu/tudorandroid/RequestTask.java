@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,13 +28,15 @@ import javax.net.ssl.X509TrustManager;
  */
 public class RequestTask extends AsyncTask<URL, Integer, Long> {
 
-    public RequestTask(View view, boolean verifyCerts) {
+    public RequestTask(View view, boolean verifyCerts, TextView textOutput) {
         this.view = view;
         this.verifyCerts = verifyCerts;
+        this.textOutput = textOutput;
     }
 
     View view;
     boolean verifyCerts;
+    TextView textOutput;
 
     @Override
     protected Long doInBackground(URL... params) {
@@ -90,6 +93,7 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
 
                         String result = slurp(in, 1024);
 
+                        this.textOutput.setText(result);
                         Snackbar.make(view, "Success! " + result, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
 
