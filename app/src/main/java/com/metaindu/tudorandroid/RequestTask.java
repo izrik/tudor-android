@@ -91,6 +91,15 @@ public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
                     return null;
                 }
 
+                if (urlConnection.getResponseCode() != 200) {
+                    Snackbar.make(view, "Bad response code, " +
+                            Integer.valueOf(
+                                    urlConnection.getResponseCode()).toString(),
+                            Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return null;
+                }
+
                 InputStream in;
                 try {
                     try {

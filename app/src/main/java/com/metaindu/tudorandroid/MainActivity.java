@@ -60,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     List<Object> tasks = req.get();
-                    text_output.setText(tasks.get(0).toString());
+                    if (tasks != null &&
+                            tasks.size() > 0 &&
+                            tasks.get(0) != null) {
+                        text_output.setText(tasks.get(0).toString());
+                    }
 
                 } catch (InterruptedException e) {
                     Snackbar.make(view, "fab.onClick Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
