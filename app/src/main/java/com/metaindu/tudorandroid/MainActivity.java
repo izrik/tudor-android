@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -53,6 +55,22 @@ public class MainActivity extends AppCompatActivity {
 
                 RequestTask req = new RequestTask(view, verifyCerts, text_output);
                 req.execute(url);
+
+                // progress indicator
+
+                try {
+                    List<Object> tasks = req.get();
+                    text_output.setText(tasks.get(0).toString());
+
+                } catch (InterruptedException e) {
+                    Snackbar.make(view, "fab.onClick Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    Snackbar.make(view, "fab.onClick Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -18,6 +18,8 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -27,7 +29,7 @@ import javax.net.ssl.X509TrustManager;
 /**
  * Created by izrik on 1/2/2016.
  */
-public class RequestTask extends AsyncTask<URL, Integer, Long> {
+public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
 
     public RequestTask(View view, boolean verifyCerts, TextView textOutput) {
         this.view = view;
@@ -40,7 +42,7 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
     TextView textOutput;
 
     @Override
-    protected Long doInBackground(URL... params) {
+    protected List<Object> doInBackground(URL... params) {
 
         if (!verifyCerts) {
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
@@ -76,6 +78,8 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
 
         try {
 
+            String responseBody = null;
+
             for (URL url : params) {
 
                 HttpURLConnection urlConnection;
@@ -93,8 +97,8 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
                         in = urlConnection.getInputStream();
 
                         String result = slurp(in, 1024);
+                        responseBody = result;
 
-                        this.textOutput.setText(result);
                         Snackbar.make(view, "Success! " + result, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
 
@@ -110,7 +114,11 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
                 }
             }
 
-            return 0L;
+            List<Object> res = new ArrayList<Object>();
+            if (responseBody != null) {
+                res.add(responseBody);
+            }
+            return res;
 
         } catch (Exception e) {
             // e.printStackTrace();
