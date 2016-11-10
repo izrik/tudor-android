@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
@@ -77,9 +78,9 @@ public class RequestTask extends AsyncTask<URL, Integer, Long> {
 
             for (URL url : params) {
 
-                HttpsURLConnection urlConnection;
+                HttpURLConnection urlConnection;
                 try {
-                    urlConnection = (HttpsURLConnection) url.openConnection();
+                    urlConnection = (HttpURLConnection) url.openConnection();
                 } catch (IOException e) {
                     Snackbar.make(view, "2 Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
