@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.util.Base64;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -31,15 +33,19 @@ import javax.net.ssl.X509TrustManager;
  */
 public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
 
-    public RequestTask(View view, boolean verifyCerts, TextView textOutput) {
+    public RequestTask(View view, boolean verifyCerts, TextView textOutput, String username, String password) {
         this.view = view;
         this.verifyCerts = verifyCerts;
         this.textOutput = textOutput;
+        this.username = username;
+        this.password = password;
     }
 
     View view;
     boolean verifyCerts;
     TextView textOutput;
+    String username;
+    String password;
 
     @Override
     protected List<Object> doInBackground(URL... params) {
@@ -85,6 +91,13 @@ public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
                 HttpURLConnection urlConnection;
                 try {
                     urlConnection = (HttpURLConnection) url.openConnection();
+                    if (this.username != null && !this.username.equals("") &&
+                            this.password != null && !this.password.equals("")) {
+                        String userCredentials = this.username + ":" + this.password;
+                        String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.DEFAULT).replace("\n", "");
+                        urlConnection.setRequestProperty("Authorization", basicAuth);
+                    }
+
                 } catch (IOException e) {
                     Snackbar.make(view, "2 Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

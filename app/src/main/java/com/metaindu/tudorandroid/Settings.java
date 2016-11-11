@@ -15,4 +15,18 @@ public class Settings {
         String url = sp.getString("url", null);
         return url;
     }
+
+    private static String username = "";
+    public static String getUsername(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String username = sp.getString("username", null);
+        return username;
+    }
+
+    private static String password = "";
+    public static String getPassword(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String password = sp.getString("password", null);
+        return password;
+    }
 }

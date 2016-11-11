@@ -53,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 boolean verifyCerts = sp.getBoolean("verify_tls_certs", true);
 
-                RequestTask req = new RequestTask(view, verifyCerts, text_output);
+                String username = Settings.getUsername(MainActivity.this);
+                String password = Settings.getPassword(MainActivity.this);
+
+                RequestTask req = new RequestTask(view, verifyCerts, text_output, username, password);
                 req.execute(url);
 
                 // progress indicator
