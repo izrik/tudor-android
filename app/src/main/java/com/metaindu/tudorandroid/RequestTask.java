@@ -97,6 +97,7 @@ public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
                         String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes(), Base64.DEFAULT).replace("\n", "");
                         urlConnection.setRequestProperty("Authorization", basicAuth);
                     }
+                    urlConnection.setRequestProperty("Accept", "application/json");
 
                 } catch (IOException e) {
                     Snackbar.make(view, "2 Caught an exception: " + e.toString(), Snackbar.LENGTH_LONG)
