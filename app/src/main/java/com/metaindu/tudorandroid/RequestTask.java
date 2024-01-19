@@ -105,6 +105,7 @@ public class RequestTask extends AsyncTask<URL, Integer, List<Object>> {
                     return null;
                 }
 
+                int code = urlConnection.getResponseCode();
                 if (urlConnection.getResponseCode() != 200) {
                     Snackbar.make(view, "Bad response code, " +
                             Integer.valueOf(
